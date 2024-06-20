@@ -1,10 +1,11 @@
-import { CiShoppingCart } from "react-icons/ci";
+import { CiShoppingCart } from "react-icons/ci"; ///Eliminar esta extension
+import cart from './assets/Cart.svg' 
 
 
 const CardWidget = () => {
     return (
         <div>
-            <img src = {CiShoppingCart}/>
+            <img src = {cart}/>
             0
         </div>
     )

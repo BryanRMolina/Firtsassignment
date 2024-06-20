@@ -1,10 +1,14 @@
 import CardWidget from "./CardWidget/CardWidget"
 import ItemListContainer from "./ItemListContainer/ItemListContainer"
+import './navbar/navbar.css'
+
 
 const NavBar = () => {
     return(
-        <nav>
+    <>
+        <nav className="navbar">
             <h3>Richard Servicios Multiples</h3>
+            <img src="" alt="" />
             <div>
                 <button>Inicio</button>
                 <button>Productos de limpienza</button>
@@ -13,10 +17,12 @@ const NavBar = () => {
                 <button>Mas...</button>
                 <button>Contacto</button>
             </div>
-            <CardWidget/>
-            <ItemListContainer greeting={'Bienvenidos'} />
-
+            <div className="CardWG">
+                <CardWidget/>
+            </div>
         </nav>
+        <ItemListContainer greeting={'Bienvenidos'} />        
+    </>
     )
 }
 
