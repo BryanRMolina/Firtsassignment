@@ -1,0 +1,49 @@
+/* AboutCard.css */
+
+.weRoutes{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #2176AE; /* Color de fondo opcional */
+}
+
+.card-We {
+    background-color: white;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px; /* Ancho máximo de la tarjeta */
+    width: 100%; /* Asegúrate de que la tarjeta use todo el ancho disponible hasta el máximo */
+    
+}
+  
+  .card h2 {
+    color: #1A202C; /* Color del título */
+    font-size: 24px;
+  }
+  
+  .card p {
+    color: #4A5568; /* Color del texto */
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
+  .card a {
+    color: #319795; /* Color de los enlaces */
+    text-decoration: none;
+  }
+  
+  .card a:hover {
+    text-decoration: underline;
+  }
+  
+  strong {
+    color: #1A202C;
+  }
+  
+  .card-We h1 {
+    margin-left: 300px;
+  }
+
