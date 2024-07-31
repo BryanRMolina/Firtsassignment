@@ -8,7 +8,7 @@ const NavBar = () => {
     const location = useLocation();
 
     const showCategory = () => {
-        const hiddenPaths = ['/our', '/vision', '/coomingsoon', '/contacts'];
+        const hiddenPaths = ['/our', '/vision', '/coomingsoon', '/contacts', '/cart'];
         return !hiddenPaths.includes(location.pathname);
     }
 
@@ -33,9 +33,6 @@ const NavBar = () => {
                         <button> Visión </button>
                     </Link>
 
-                    <Link to="/contacts">
-                        <button> Contactos </button>
-                    </Link> 
                 </div>
                 <div className="CardWG">
                     <CardWidget />

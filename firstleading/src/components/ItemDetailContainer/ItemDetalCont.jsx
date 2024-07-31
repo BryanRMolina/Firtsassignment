@@ -4,21 +4,30 @@ import { getProductById } from '../data/asyncMock'
 import ItemDetails from '../ItemDetails/ItemDetails'
 import {HashLoader} from 'react-spinners'
 import { Flex } from '@chakra-ui/react'
-
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '../../config/firebase'
 
 const ItemDetalCont = () => {
     const [product, setProduct ] = useState({})
     const {productId} = useParams()
     const [loading, setLoading] = useState(true)
 
-    console.log(product)
-    console.log(productId)
 
     useEffect(() => {
-        getProductById(productId)
-            .then((data) => setProduct(data))
-            .catch((error) => console.log(error))
-            .finally(() => setLoading(false))
+      const getData = async () =>{
+        const queryRef = doc(db, 'productos', productId)
+        const response = await getDoc(queryRef)
+
+        const newItem = {
+          ...response.data(),
+          id: response.id
+        }
+
+        setProduct(newItem)
+        setLoading(false)
+
+      }
+      getData()
     }, [])
 
   return (

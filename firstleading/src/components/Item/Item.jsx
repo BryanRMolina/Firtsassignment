@@ -16,7 +16,6 @@ const Item = ({nombre, id, img, precio, stock}) => {
             <Link to = {`/producto/${id}`}> Ver más </Link>
           </button>
         </div>
-        <ItemCount initialValue = {1} stock = {stock}/>
       </div>
     </div>
   )

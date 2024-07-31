@@ -1,27 +1,39 @@
-import { Button } from '@chakra-ui/react'
-import React, {useState} from 'react'
-import { MdHeight } from 'react-icons/md'
-
+import React, { useState } from 'react'
+import useCounter from '../../hooks/useCounter'
+import { Button, Flex, Heading } from '@chakra-ui/react'
 
 const ItemCount = ({initialValue, stock, onAdd}) => {
-    const [ count, setCount ] = useState(initialValue)
+    const { count, incrementar, decrementar } = useCounter(initialValue, stock)
 
-    const incrementar = () => {
-        count < stock && setCount(count + 1)
-    }
-
-    const decrementar = () => {
-        count > initialValue && setCount(count - 1)
-    }
-    return (
-        <div>
-            <button onClick={decrementar}>-</button>
-            <span>{count}</span>
-            <button onClick={incrementar}>+</button>
-            <Button size={2} onClick={() => onAdd(count)}>
-                Agregar
-            </Button>
-        </div>
+  return (
+    <Flex>
+        <Button 
+          onClick={decrementar}
+          background={'#C49450'} 
+          color={'#3F747D'}
+          _hover={{ bg: '#D2A567', cursor: 'pointer' }}
+          >
+            -
+        </Button>
+        <Heading mx={3} color={'#3F747D'}>{count}</Heading>
+        <Button 
+          onClick={incrementar}
+          background={'#C49450'} 
+          color={'#3F747D'}
+          _hover={{ bg: '#D2A567', cursor: 'pointer' }}
+          >
+            +
+        </Button>
+        <Button 
+          onClick={() => onAdd(count)}
+          background={'#C49450'} 
+          color={'#3F747D'}
+          ml={3}
+          _hover={{ bg: '#D2A567', cursor: 'pointer' }}
+          >
+          Add
+        </Button>
+    </Flex>
   )
 }
 

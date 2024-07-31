@@ -4,23 +4,40 @@ import { getProducts, getProductsByCategory } from '../data/asyncMock'
 import  ItemList  from '../ItemList/ItemList'
 import {useParams} from 'react-router-dom'
 import {HashLoader} from 'react-spinners'
+import {db} from '../../config/firebase'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 
 
 const ItemListContainer = ({greeting}) => {
     const [productos, setProductos] = useState([])
     const {categoryId} = useParams()
     const [ loading, setLoading ] = useState(true)
-
-    useEffect(() => {
+    
+    useEffect(()=> {
         setLoading(true)
-
-        const dataProductos = categoryId ? getProductsByCategory(categoryId) : getProducts()
-
-            dataProductos
-            .then((prod) => setProductos(prod))
-            .catch((error) => console.log(error))
-            .finally(() => setLoading(false))
-    }, [categoryId])
+          const getData = async () => {
+            // Obtenemos la referencia a la colección
+            const coleccion = collection(db, 'productos')
+    
+            // creamos una referencia de consulta (queryRef)
+            const queryRef = !categoryId ? 
+            coleccion : query(coleccion, where('categoria', '==', categoryId))
+    
+            // ejecutamos la consulta y obtenemos los documentos
+            const response = await getDocs(queryRef)
+            const products = response.docs.map((doc) => {
+              const newItem = {
+                ...doc.data(), // los datos del documento
+                id: doc.id // agregamos el id del doc
+              }
+              return newItem
+            })
+            setProductos(products)
+            setLoading(false)
+          }
+          getData()
+      }, [categoryId])
+    
 
     return(
         <Flex direction = {'column'} justify = {'center'} align = {'center'}>

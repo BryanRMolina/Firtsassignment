@@ -1,58 +1,91 @@
-import React from 'react'
-import './ItemDetails.css'
+import React, { useContext, useState } from 'react'
+import { Card, CardHeader, CardBody, CardFooter, Stack, Heading, Text,Button, ButtonGroup, Divider, Image, Flex, Link as ChakraLink } from '@chakra-ui/react'
 import ItemCount from '../ItemCount/ItemCount'
-import {Card,Image,Stack,CardBody,Heading,Text,CardFooter,Button, Tag,TagLabel,TagCloseButton} from '@chakra-ui/react'
 import { ToastContainer, toast } from 'react-toastify';
+import Context from '../../Context/CartContext';
+import { Link } from 'react-router-dom';
 
+const ItemDetail = ({ nombre, descripcion, id, img, precio, stock, categoria}) => {
+  const [ quantity, setQuantity ] = useState(0)
+  const { addItem } = useContext(Context)
 
-const ItemDetails = ({nombre, id, img, precio, descripcion, stock}) => {
     const onAdd = (quantity) => {
-        toast(`Agregaste ${quantity} productos`)
+      const item = {
+        id,
+        nombre,
+        precio
+      }
+      setQuantity(quantity)
+      addItem(item, quantity)
+        toast.success(`Agregaste ${quantity} productos`)
     }
 
   return (
-  <Card
-    direction={{ base: 'column', sm: 'row' }}
-    overflow='hidden'
-    variant='outline'
-    background='white'
-    borderRadius='20px'
-    padding='5px'
-    height='100%'
-    width='70%'
+    <>
+      <Card w={'80%'} h={'100%'} boxShadow='lg' mt={10} >
+          <Flex bg={'#3F747D'} h={'5rem'} justify={'flex-start'} align={'center'} borderRadius={'5px 5px 0 0'} >
+          <Text ml={2} fontSize="md" color="#c5d0d3">Categoría: {categoria}</Text>
 
-  >
-    <Image
-      objectFit='cover'
-      maxW={{ base: '100%', sm: '200px' }}
-      src={img}
-      alt={nombre}
-      background='gray'
-      borderRadius='10px'
-    />
+          </Flex>
+          <Flex
+              wrap={'wrap'}
+              align={'center'}
+              justify={'space-between'}
+              w={'100%'} 
+              h={'100%'}
+              className='cardFlex'
+              >
+              <Flex
+                  w={'40%'}
+                  h={'90%'}
+                  justify={'center'}
+                  align={'center'}
+                  >
 
-    <Stack>
-      <CardBody>
-        <Heading size='md' alignItems='center'>{nombre}</Heading>
-        <Text py='2'> {descripcion} </Text>
-      </CardBody>
+              <Image
+              src={img}
+              alt={nombre}
+              borderRadius="lg"
+              boxSize='10%'
+              objectFit='contain' 
+              w='150px'
+              h='150px' 
+              rowSpan={2} colSpan={1} 
+              
+              />
+              </Flex>
+              <Flex
+                  direction={'column'}
+                  justify={'space-around'}
+                  align={'start'}
+                  w={'50%'}
+                  minHeight={'400px'}
+                  >
+              <Heading size="xl" color="#608e8e" h={'4rem'}  > {nombre}</Heading>
+              <Text color="#3F747D" fontSize="xl" w={'95%'}  >
+                  {descripcion}
+              </Text>
+              <Text color="#3F747D" fontSize="2xl"  >
+                  ${precio}
+              </Text>
+              </Flex>
+              <Flex w={'100%'} h={'10%'} justify={'center'} align={'center'} pb={5}>
+                {
+                  quantity === 0 ?
+                  <ItemCount stock={stock} initialValue={1} onAdd={onAdd} />
+                  :
+                  <Flex direction={'column'}>
+                  <ChakraLink as={Link} to='/cart'>Ir al carrito</ChakraLink>
+                  <ChakraLink as={Link} to='/'>Seguir comprando</ChakraLink>
+                  </Flex>
 
-      <CardFooter>
-      <Tag
-        size='ms'
-        borderRadius='full'
-        variant='solid'
-        colorScheme='green'
-      >
-        <TagLabel>{precio}</TagLabel>
-      </Tag>
-        <ItemCount initialValue = {1} stock = {stock} onAdd={onAdd}/>
-      </CardFooter>
-    </Stack>
-    <ToastContainer />
-  </Card>
-
+                }
+              </Flex>              
+          </Flex>
+      </Card>
+      <ToastContainer />
+    </>
   )
 }
 
-export default ItemDetails
+export default ItemDetail
